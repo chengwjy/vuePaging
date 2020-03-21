@@ -1,6 +1,12 @@
 <template>
   <div id="app">
-    <Paging :config="page"></Paging>
+
+    <ul>
+      <li v-for="item in goods" :key="item">
+        {{item}}
+      </li>
+    </ul>
+    <Paging :config="page" @pageCli="pageCli"></Paging>
   </div>
 </template>
 
@@ -16,23 +22,35 @@ export default {
   },
   data(){
     return {
+      // 商品列表
+      goods: [],
+      // 分页参数
       page:{
-        1:1
+        count: 0,
+        pageSize: 0,
+        offset: 0
       }
     }
   },
+
   mounted(){
-
-axios.get('http://mock/api/hello')
-  .then(function (response) {
-    console.log(response);
-    //将app2中双向绑定的msg数据更改为mock模拟数据
-    
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-
+    let that = this
+    axios.get('http://mock/api/hello')
+      .then(function (response) {
+      
+        //将app2中双向绑定的msg数据更改为mock模拟数据
+        that.page =  response.data.data.config
+        that.goods = response.data.data.goods
+        // console.log( response)
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+  methods: {
+    pageCli(item){
+      console.log('子组件点击页码',item)
+    }
   }
 }
 </script>
