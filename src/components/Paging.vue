@@ -1,8 +1,9 @@
 <template>
   <div class="hello">
-    <div v-for="item in pageItem" :key="item" class="pageItem" :class="{active:item == pageNow}" @click="$emit('pageCli',item);">
+    
+    <button v-for="item in pageItem" :key="item" class="pageItem" :class="{active:item == pageNow}" @click="$emit('pageCli',item);">
       {{item}}
-    </div>
+    </button>
   </div>
 </template>
 
@@ -23,8 +24,7 @@ export default {
     }
   },
   mounted(){
-    console.log('初始化分页配置',this.config)
-    this.initPage()
+
   },
   watch:{
     config:{
@@ -37,7 +37,6 @@ export default {
   }
   ,
   methods:{
-
     // 渲染分页
     initPage(){
   
@@ -55,20 +54,19 @@ export default {
                          : Math.floor(this.config.count / this.config.pageSize) + 1
         console.log('总页数',pageCount)
         // 得到pageNow（当前页码
-        let pageNow = this.config.offset % this.config.pageSize == 0 ?
-                     (Math.floor(this.config.offset / this.config.pageSize) === 0 ?
-                       1 : Math.floor(this.config.offset / this.config.pageSize))
-                     : Math.floor(this.config.offset / this.config.pageSize) + 1
+        
+        let pageNow = this.config.offset === 0 ? 1 : this.config.offset / this.config.pageSize + 1
         console.log('当前页码',pageNow)
 
         let pageArr = []
+        
         // 默认生成页码7个，当前页码默认在最中间
         if(pageNow - 3 > 0 && pageNow + 3 <= pageCount){
           pageArr = generateArray(pageNow - 3, pageNow + 3)
         }else if(pageNow - 3 > 0){
-          pageArr = generateArray(pageNow - 3, pageCount)
+          pageArr = generateArray(pageCount > 7 ? pageCount - 7 :pageNow - 3, pageCount)
         }else if(pageNow + 3 <= pageCount){
-          pageArr = generateArray(0, pageNow + 3)
+          pageArr = generateArray(1, pageCount > 7 ? 7 : pageCount)
         }else{
           pageArr = generateArray(0, pageCount)
         }
