@@ -2,7 +2,7 @@
   <div id="app">
     <input type="text" v-model="keyword">
     <ul>
-      <li v-for="item in goods" :key="item">
+      <li v-for="item in goods" :key="item.server">
         {{item.server}}
       </li>
     </ul>

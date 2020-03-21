@@ -68,7 +68,7 @@ export default {
         }else if(pageNow + 3 <= pageCount){
           pageArr = generateArray(1, pageCount > 7 ? 7 : pageCount)
         }else{
-          pageArr = generateArray(0, pageCount)
+          pageArr = generateArray(1, pageCount)
         }
         this.pageItem = pageArr
         this.pageNow = pageNow
