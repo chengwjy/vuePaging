@@ -71,6 +71,7 @@ export default {
   watch:{
     keyword:function(v){
       console.log('赋值关键词继续')
+      this.page.offset = 0
       this.rush()
     }
   }

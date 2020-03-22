@@ -64,7 +64,9 @@ export default {
         if(pageNow - 3 > 0 && pageNow + 3 <= pageCount){
           pageArr = generateArray(pageNow - 3, pageNow + 3)
         }else if(pageNow - 3 > 0){
-          pageArr = generateArray(pageCount > 7 ? pageCount - 7 :pageNow - 3, pageCount)
+          // 另外一种情况没有考虑到
+          // pageCount < 7 并且 pageNow - 3 > 1
+          pageArr = generateArray(pageCount > 7 ? pageCount - 7 :(pageNow - 3 > 1 ? 1: pageNow - 3), pageCount)
         }else if(pageNow + 3 <= pageCount){
           pageArr = generateArray(1, pageCount > 7 ? 7 : pageCount)
         }else{
